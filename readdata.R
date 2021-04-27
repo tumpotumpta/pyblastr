@@ -14,7 +14,7 @@ library(viridis)
 library(leaflet.providers)
 library(leaflet)
 
-Sys.setlocale("LC_ALL", "pt_BR.UTF-8")
+# Sys.setlocale("LC_ALL", "pt_BR.UTF-8")
 
 
 
@@ -123,3 +123,5 @@ wb_all2 <- wb_all %>%
          py_binomial, py_lineage, wheat)
   
 sd2 <- SharedData$new(wb_all2)
+
+write_csv(wb_all, "rawData.csv")
