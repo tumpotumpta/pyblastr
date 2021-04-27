@@ -116,12 +116,12 @@ croll_all <- croll_all %>%
 #Raw data
 wb_all = bind_rows(delponte_all, kamoun_all, farman_all, biotrigo_all, croll_all)
 
-sd <- SharedData$new(wb_all)
+#sd <- SharedData$new(wb_all)
 
 wb_all2 <- wb_all %>% 
   select(lab, labcode, year, country, collector, host_binomial,
          py_binomial, py_lineage, wheat)
   
-sd2 <- SharedData$new(wb_all2)
+#sd2 <- SharedData$new(wb_all2)
 
 write_csv(wb_all, "rawData.csv")
