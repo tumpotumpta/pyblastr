@@ -1,4 +1,5 @@
 # load packages
+library(tidyverse)
 library(janitor)
 library(maps)
 library(mapproj)
@@ -46,5 +47,5 @@ map <- ggplot(world, aes(x = long, y = lat), group = group) +
   scale_colour_viridis_d(begin = 0.65, end = 0.3) +
   coord_map("mercator", ylim = c(-60, 90)) +
   theme_light() # classic, minimalist, bw
-# map
+map
 ggsave("map.png", plot = map, width = 20, height = 15, units = "cm", dpi = 300)
