@@ -2,7 +2,6 @@
 library(tidyverse)
 library(janitor)
 library(maps)
-library(mapproj)
 
 # read raw data from csv created by 'readdata.R'
 # specify column types, as default guesses 'link' and 'collector'
@@ -34,18 +33,25 @@ p_lin <- wb_all %>%
 # ------------------
 
 # import country borders
-world <- map_data("world") %>%
-  arrange(order)
+world <- map_data(map = "world",
+                  region = ".",
+                  exact = FALSE,
+                  # projection = "cylindrical",
+                  boundary = FALSE,
+                  wrap = c(-180, 180),
+                  ylim = c(-60, 90)) # 
 
 # plot strains on map
 map <- ggplot(world, aes(x = long, y = lat), group = group) +
-  # geom_path(aes(group = group)) +
-  geom_polygon(aes(group = group)) +
-  geom_point(data = wb_all, aes(x = lon, y = lat, colour = wheat), size = 1) +
+  geom_path(aes(group = group), size = 0.2) +
+  # geom_polygon(aes(group = group)) +
+  geom_point(data = wb_all, aes(x = lon, y = lat, fill = wheat), size = 1.5, shape = "circle filled") +
   scale_y_continuous(breaks = (-2:2) * 30) +
   scale_x_continuous(breaks = (-4:4) * 45) +
-  scale_colour_viridis_d(begin = 0.65, end = 0.3) +
-  coord_map("mercator", ylim = c(-60, 90)) +
-  theme_light() # classic, minimalist, bw
-map
-ggsave("map.png", plot = map, width = 20, height = 15, units = "cm", dpi = 300)
+  scale_fill_viridis_d(option = "D", begin = 0.35, end = 0.7) +
+  labs(title = "Sampling locations of Pyricularia strains compiled in Pyblastr") +
+  theme_void() + # void, light, minimalist
+  theme(legend.title = element_blank(),
+        legend.position = "top")
+# map
+ggsave("map.png", plot = map, width = 20, height = 10, units = "cm", dpi = 300)
